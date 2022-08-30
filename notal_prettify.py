@@ -55,5 +55,45 @@ if exists(path):
                         token = ''
                         state = 'operator'
 
-print(tokens)
+html = """<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Output</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            padding: 20px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <pre style='font-size: 1em; line-height: 1.15;'>"""
 
+for token in tokens:
+    if token in keywords:
+        if token in special_keywords:
+            html += f"<u><b>{token}</b></u>"
+        else:
+            html += f"<u>{token}</u>"
+    else:
+        if token == '<-':
+            token = '&larr;'
+        if token == '->':
+            token = '&rarr;'
+        if token == '<=':
+            token = '&le;'
+        if token == '>=':
+            token = '&ge;'
+        html += token
+
+html += '</pre>\n</body>\n</html>'
+
+with open('output.html', 'w') as output:
+    output.write(html)
